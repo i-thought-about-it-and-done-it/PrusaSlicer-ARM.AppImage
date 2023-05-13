@@ -4,7 +4,7 @@ name: artifact-build
 
 jobs:
   build-artifact:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       -
         name: Code checkout
@@ -24,10 +24,7 @@ jobs:
           APPIMAGE_ARCH: "aarch64"
           ARCH: "aarch64"
         run: |
-          docker run --env LATEST_VERSION --env DPKG_ARCH --env APPIMAGE_ARCH --env ARCH --platform linux/amd64 -v "$(pwd)":/app --workdir=/app debian:bullseye ./build.sh
+          docker run --env LATEST_VERSION --env DPKG_ARCH --env APPIMAGE_ARCH --env ARCH --platform linux/amd64 -v "$(pwd)":/app --workdir=/app ubuntu:22.04 ./build.sh
       -
         name: Upload Prusa Slicer artifact version 2.3.1 for ubuntu 22.04/arm64
-        uses: actions/upload-artifact@v2
-        with:
-          name: PrusaSlicer-2.3.1+ubuntu-22.04-arm64.tar.bz2
-          path: ${{ github.workspace }}/pkg2appimage/PrusaSlicer/PrusaSlicer.AppDir/*
+        run: dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
