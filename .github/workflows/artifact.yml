@@ -24,7 +24,7 @@ jobs:
           APPIMAGE_ARCH: "aarch64"
           ARCH: "aarch64"
         run: |
-          docker run --env LATEST_VERSION --env DPKG_ARCH --env APPIMAGE_ARCH --env ARCH --platform linux/amd64 -v "$(pwd)":/app --workdir=/app ubuntu:focal ./build.sh
+          docker run --env LATEST_VERSION --env DPKG_ARCH --env APPIMAGE_ARCH --env ARCH --platform linux/amd64 -v "$(pwd)":/app --workdir=/app ubuntu:22.04 ./build.sh
       -
         name: Upload Prusa Slicer artifact version 2.3.1 for ubuntu 22.04/arm64
         run: dpkg-query -Wf '${Installed-Size}\t${Package}\n' | sort -n
